@@ -9,8 +9,9 @@ const {
 } = require('../config/auth');
 
 
-//User model
+// models
 const User = require('../models/User');
+const Item = require('../models/item');
 
 //all User Names 
 router.get('/', async (req, res) => {
@@ -40,12 +41,29 @@ router.get('/login', ensureUnAuthenticated, (req, res) => {
 // Login handle
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/dashboard',
+        successRedirect: '/users/dashboard',
         failureRedirect: '/users/login',
         failureFlash: true
     })(req, res, next);
 })
 
+//Dashboard
+router.get('/dashboard', ensureAuthenticated, async (req, res) => {
+    try {
+        const items = await Item.find({
+            Owner: req.user._id
+        });
+
+        res.render('users/dashboard', {
+            user: req.user,
+            items: items
+        });
+
+    } catch {
+
+    }
+
+});
 
 // Register
 router.get('/register', ensureUnAuthenticated, (req, res) => {
@@ -133,8 +151,6 @@ router.post('/register', (req, res) => {
         });
     }
 });
-
-
 
 // Logout Handle
 router.get('/logout', (req, res) => {

@@ -1,0 +1,16 @@
+<h1 class="mt-4">Dashboard</h1>
+<a href="/users">Search Users</a>
+<p class="lead mb-3">Welcome <%= user.name%> </p>
+<form method="POST" action="users/delete?_method=DELETE">
+    <a href="/users/logout" class="btn btn-primary">Logout?</a>
+    <button type="submit" class="btn btn-danger">Delete Account</button>
+</form>
+
+<div class="item-grid ">
+    <% items.forEach(item => { %>
+    <a href="/items/<%= item.id %>">
+        <img class="item-cover" height="200" width="200" style="border-radius: 10px;" src=" <%=item.coverImagePath%>"
+            alt="">
+    </a>
+    <% }) %>
+</div>

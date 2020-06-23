@@ -13,9 +13,14 @@
 </form>
 <br>
 <div class="item-grid ">
+    <% if (items.length > 0) {%>
+    <h3>Recent Items</h3>
+    <% } %>
+
     <% items.forEach(item => { %>
     <a href="/items/<%= item.id %>">
-        <img class="item-cover" src=" <%=item.coverImagePath%>" alt="">
+        <img class="item-cover" height="200" width="200" style="border-radius: 10px;" src="<%=item.coverImagePath%>"
+            alt="">
     </a>
     <% }) %>
 </div>

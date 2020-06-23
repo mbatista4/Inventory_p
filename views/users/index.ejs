@@ -1,4 +1,14 @@
+<nav>
+    <ul>
+        <li><a href="/dashboard">dashboard</a></li>
+    </ul>
+</nav>
+
 <h2 class="page-header"><a href="/users/">Search Users</a></h2>
+
+<form action="/users/delete?_method=DELETE" method="POST">
+    <button type="submit">delete</button>
+</form>
 <h5><a href="/users/logout" class="">Logout</a></h5>
 <form action="/users" method="get">
     <div class="form-row">
