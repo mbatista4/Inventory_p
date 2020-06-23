@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const Item = require('./item');
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -19,4 +21,20 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('User', userSchema);
+userSchema.pre('remove', function (next) {
+
+    Item.find({
+        owner: this.id
+    }, (err, items) => {
+        if (err) {
+            next(err);
+        } else if (items.length > 0) {
+            next(new Error('This author still has Items'));
+        } else {
+            next();
+        }
+    })
+});
+
+
+module.exports = mongoose.model('users', userSchema);

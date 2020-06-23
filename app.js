@@ -25,9 +25,12 @@
   app.use(expressLayouts);
   app.set('view engine', 'ejs');
   app.use(methodOverride('_method'));
+  app.set('views', __dirname + '/views');
+  app.set('layout', 'layouts/layout');
 
   // BodyParser
   app.use(express.urlencoded({
+      limit: '10mb',
       extended: false
   }));
 
@@ -41,6 +44,7 @@
   // Passport Middleware
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(express.static('public'));
 
   // Connect Flash
   app.use(flash());
@@ -56,6 +60,7 @@
   //Routes
   app.use('/', require('./routes/index'));
   app.use('/users', require('./routes/users'));
+  app.use('/items', require('./routes/items'));
 
 
   const PORT = process.env.PORT || 3000;

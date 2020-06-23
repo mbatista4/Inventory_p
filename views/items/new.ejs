@@ -1,0 +1,41 @@
+<h2 class="page-header">New Item</h2>
+
+<form action="/items" method="POST">
+
+    <div class="">
+        <label for="item">Name</label>
+        <input type="text" name="name" placeholder="Item Name">
+    </div>
+
+    <div class="">
+        <label for="Type">Type</label>
+        <input type="text" name="itemType" placeholder="Item Type">
+    </div>
+    <div class="">
+        <select name="user" id="">
+            <% users.forEach(user => { %>
+            <% if(user.id === item.user){%>
+            <option selected label="<%= user.name %>" value="<%= user.id %>"></option>
+            <% } else {%>
+            <option selected label="<%= user.name %>" value="<%= user.id %>"></option>
+            <% } %>
+            <% }); %>
+        </select>
+        <h5>Owner</h5>
+    </div>
+    <div class="">
+        <div class="">
+            <label for="cover">Cover</label>
+            <input type="file" name="cover" class="filepond">
+        </div>
+        <div class="">
+            <label for="description">Description</label>
+            <textarea name="description"></textarea>
+        </div>
+    </div>
+
+    <div class="">
+        <a class="btn btn-danger" href="/items">Cancel</a>
+        <button class="btn btn-primary" type="submit">Create</button>
+    </div>
+</form>

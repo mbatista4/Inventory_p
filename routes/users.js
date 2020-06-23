@@ -4,16 +4,37 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 const {
-    ensureUnAuthenticated
+    ensureUnAuthenticated,
+    ensureAuthenticated
 } = require('../config/auth');
 
 
 //User model
 const User = require('../models/User');
 
+//all User Names 
+router.get('/', async (req, res) => {
+
+    let searchOptions = {};
+
+    if (req.query.name != null && req.query.name !== '') {
+        searchOptions.name = new RegExp(req.query.name, 'i');
+    }
+
+    try {
+        const users = await User.find(searchOptions);
+        res.render('users/index', {
+            users: users,
+            searchOptions: req.query
+        })
+    } catch {
+        res.redirect('/users');
+    }
+});
+
 // Login
 router.get('/login', ensureUnAuthenticated, (req, res) => {
-    res.render('login');
+    res.render('users/login');
 });
 
 // Login handle
@@ -28,7 +49,7 @@ router.post('/login', (req, res, next) => {
 
 // Register
 router.get('/register', ensureUnAuthenticated, (req, res) => {
-    res.render('register');
+    res.render('users/register');
 });
 
 // Register Handle
@@ -65,7 +86,7 @@ router.post('/register', (req, res) => {
 
     // Check passwords match
     if (errors.length > 0) {
-        res.render('register', {
+        res.render('users/register', {
             errors,
             name,
             email,
@@ -82,7 +103,7 @@ router.post('/register', (req, res) => {
                 errors.push({
                     msg: 'Email is already registered'
                 });
-                res.render('register', {
+                res.render('users/register', {
                     errors,
                     name,
                     email,
@@ -111,7 +132,6 @@ router.post('/register', (req, res) => {
             }
         });
     }
-
 });
 
 
