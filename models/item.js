@@ -21,7 +21,7 @@ const itemSchema = new Schema({
         type: String,
         required: true
     },
-    Owner: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
@@ -38,5 +38,4 @@ itemSchema.virtual('coverImagePath').get(function () {
     }
 })
 
-
-module.exports = mongoose.model('items', itemSchema);
+module.exports = mongoose.model('Item', itemSchema);

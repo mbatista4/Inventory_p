@@ -1,0 +1,16 @@
+<h2 class="page-header"><%= user.name %></h2>
+<div class="contact info">
+    <h4>Contact info</h4>
+    <div class="info-container">
+        <label for="email">Email: </label>
+        <p><%= user.email %></p>
+    </div>
+    <div class="info-container">
+        <label for="phone">Phone Number: </label>
+        <p>(123)-321 3212</p>
+    </div>
+</div>
+<% if(itemsByUser.length > 0 ) { %>
+<h2 class="page-header">Items by user</h2>
+<%- include('../partials/itemGrid', {items: itemsByUser}) %>
+<%} %>

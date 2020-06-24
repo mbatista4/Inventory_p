@@ -9,7 +9,8 @@ module.exports = {
     },
     ensureUnAuthenticated: function (req, res, next) {
         if (req.isAuthenticated()) {
-            res.redirect('/dashboard');
+            req.flash('success_msg', 'You can View This Page')
+            res.redirect('/users/dashboard');
         } else {
             return next();
         }

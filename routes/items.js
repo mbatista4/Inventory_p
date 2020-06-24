@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
         name: req.body.name,
         type: req.body.itemType,
         description: req.body.description,
-        Owner: req.body.user
+        user: req.body.user
     });
 
     saveCover(item, req.body.cover);
@@ -51,6 +51,26 @@ router.post('/', async (req, res) => {
     }
 
 });
+
+
+router.get('/:id', async (req, res) => {
+
+    try {
+        const item = await Item.findById(req.params.id).populate('user').exec();
+        const isOwned = (req.user != null) ? (item.user._id == req.user.id) : false;
+        console.log(isOwned);
+        res.render('items/show', {
+            item: item,
+            isOwned: isOwned
+        })
+    } catch (err) {
+        console.log(err);
+        res.send(`${err}`);
+    }
+
+
+});
+
 
 function renderNewPage(res, item, err = null) {
     renderFormPage(res, item, 'new', err);

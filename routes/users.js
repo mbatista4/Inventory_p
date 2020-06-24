@@ -159,6 +159,27 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
 })
 
+
+//Get One User Route
+router.get('/:id', async (req, res) => {
+
+
+    try {
+        const user = await User.findById(req.params.id);
+        const items = await Item.find({
+            user: user.id
+        });
+
+        res.render('users/show', {
+            user: user,
+            itemsByUser: items,
+        });
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+
 // Delete User 
 router.delete('/delete', async (req, res) => {
     try {
