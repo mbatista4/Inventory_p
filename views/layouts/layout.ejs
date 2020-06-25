@@ -15,19 +15,15 @@
     <script defer src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
     <script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
     <script defer src="../../javascripts/fileUpload.js"></script>
+    <script defer src="../../javascripts/navbar.js"></script>
+    <link rel="stylesheet" href="../../stylesheets/main.css">
     <title>Website</title>
 </head>
 
 <body>
 
+    <%- include('../partials/nav') %>
     <div class="container">
-        <div class="nav-container">
-            <ul>
-                <li><a href="/users/dashboard">Dashboard</a></li>
-                <li><a href="/users">Search Users</a></li>
-                <li><a href="/items">Search Items</a></li>
-            </ul>
-        </div>
         <%- body %>
     </div>
 
