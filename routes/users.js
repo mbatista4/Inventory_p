@@ -51,16 +51,16 @@ router.post('/login', (req, res, next) => {
 router.get('/dashboard', ensureAuthenticated, async (req, res) => {
     try {
         const items = await Item.find({
-            Owner: req.user._id
+            user: req.user._id
         });
-
+        console.log(items);
         res.render('users/dashboard', {
             user: req.user,
             items: items
         });
 
-    } catch {
-
+    } catch (err) {
+        console.error('err');
     }
 
 });
@@ -162,8 +162,6 @@ router.get('/logout', (req, res) => {
 
 //Get One User Route
 router.get('/:id', async (req, res) => {
-
-
     try {
         const user = await User.findById(req.params.id);
         const items = await Item.find({
@@ -188,6 +186,9 @@ router.delete('/delete', async (req, res) => {
         req.flash('success_msg', 'You deleted your account!');
         res.redirect('/');
     } catch (err) {
+        req.logOut();
+        req.flash('error_msg', 'Error Deleting account');
+        res.redirect('/');
         console.log(err);
     }
 });
